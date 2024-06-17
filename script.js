@@ -98,3 +98,19 @@ message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) +
 //Classes
 //logo.classList.add() _ remove _toggle_ contains
 
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+
+  // method 1
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  // method 2
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
