@@ -472,7 +472,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 // Lazy loading images
@@ -500,3 +500,67 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+//Building a slider component
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+let currentSlide = 0;
+const maxSlide = slides.length;
+const dotContainer = document.querySelector('.dots');
+
+// const createDots = function () {
+//   slides.forEach((_, i) => {
+//     dotContainer.insertAdjacentHTML('beforeend',
+
+//       `<button class="dots_dot" data-slide="${i}"></button>`
+
+//     );
+//   });
+// };
+const goToSlide = function (slide) {
+  slides.forEach((s, i) => s.style.transform = `translateX(${(i - currentSlide) * 100}%)`);
+  slides.forEach((s, i) =>
+    s.style.transform =
+    `translateX(${(i - slide) * 100}%)`);
+
+};
+// createDots();
+goToSlide(0);
+
+const nextSlide = function () {
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+
+  } else {
+    currentSlide++;
+  }
+  goToSlide(currentSlide);
+};
+const prevSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSlide - 1;
+  }
+  else {
+    currentSlide--;
+  }
+
+  goToSlide(currentSlide);
+};
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+document.addEventListener('keydown', function (e) {
+  // console.log(e);
+  if (e.key === 'ArrowLeft') {
+    prevSlide();
+  }
+});
+
+// dotContainer.addEventListener('click', function (e) {
+//   if (e.target.classList.contains('dots__dot')) {
+//     const { slide } = e.target.dataset;
+//     goToSlide(slide);
+//   }
+// });
